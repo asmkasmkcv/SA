@@ -18,15 +18,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK & Gradle Wrapper
-        run: |
-          if [ ! -f "./gradlew" ]; then
-            gradle wrapper --gradle-version 8.7 --distribution-type bin
-          fi
-          chmod +x ./gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
